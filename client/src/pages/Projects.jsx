@@ -16,7 +16,8 @@ import Exper from "../components/exp";
 import "../components/styles/skill.css"
 import IshanResume from "../Ishan.pdf";
 import SanyamResume from "../sanyam_main_resume.pdf";
-// gsap.registerPlugin(ScrollTrigger);
+import "./project.css"
+gsap.registerPlugin(ScrollTrigger);
 // let tl = gsap.timeline();
 // tl.to(".content-header-skill",{
 //   opacity:1,
@@ -40,11 +41,29 @@ function Projects() {
   const navigateHandler = (path) => {
     navigate(path);
   }
-
   const [dateState, setDateState] = useState(new Date());
   const [showMenu, setShowMenu] = useState(null);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [loco, setLoco] = useState(null);
+
+  const addHorizontalScrollAnimation = () => {
+    let sections = gsap.utils.toArray(".panel");
+    console.log(sections);
+    gsap.to(sections, {
+      xPercent: -100 * (sections.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        scroller: "#main",
+        trigger: ".dabba",
+        start: "top 20%",
+        pin: true,
+        scrub: 1,
+        snap: 1 / (sections.length - 1),
+        end: "+=8000",
+        markers: true
+      }
+    });
+  }
   const attachScrollEvent = (locoScroll) => {
     locoScroll.on("scroll", () => {
       let tl = scrollAnimation(showMenu, setShowMenu);
@@ -88,6 +107,7 @@ function Projects() {
     };
   }, [mobileMenu]);
   useEffect(() => {
+
     const locoScroll = new LocomotiveScroll({
       el: document.querySelector('#main'),
       smooth: true,
@@ -101,35 +121,42 @@ function Projects() {
 
 
     setLoco(locoScroll);
-    // locoScroll.on("scroll", ScrollTrigger.update);
+    locoScroll.on("scroll", ScrollTrigger.update);
 
-    // ScrollTrigger.scrollerProxy("#main", {
-    //   scrollTop(value) {
-    //     return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
-    //   },
-    //   getBoundingClientRect() {
-    //     return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-    //   },
-    //   pinType: document.querySelector("#main").style.transform ? "transform" : "fixed"
-    // });
-    // try {
-    //   ScrollTrigger.addEventListener('refresh', () => locoScroll.update());
-    //   ScrollTrigger.refresh();
-    // }
-    // catch (e) {
+    ScrollTrigger.scrollerProxy("#main", {
+      scrollTop(value) {
+        return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+      },
+      getBoundingClientRect() {
+        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+      },
+      pinType: document.querySelector("#main").style.transform ? "transform" : "fixed"
+    });
+    try {
+      ScrollTrigger.addEventListener('refresh', () => locoScroll.update());
+      ScrollTrigger.refresh();
+    }
+    catch (e) {
 
-    // }
+    }
 
     // fadeInanimation();
 
 
     // const animatedText = document.querySelectorAll(".build-in-slideX-left");
     // animatedText.forEach((ele)=>textObserver.observe(ele));
+
+
+
+
     return () => {
       locoScroll.destroy();
+
     };
   }, []);
   useEffect(() => {
+    let dabba = document.getElementsByClassName("dabba-wrapper")[0];
+    dabba.classList.add("animate");
     function enterAnimation(link, e, index) {
       link.tl.tweenFromTo(0, "midway");
     }
@@ -168,7 +195,7 @@ function Projects() {
       });
 
       // Mouseenter
-     
+
       link.addEventListener("mouseenter", (e) => {
         enterAnimation(link, e, index);
       });
@@ -186,6 +213,7 @@ function Projects() {
         link.removeEventListener("mouseleave", (e) => {
           leaveAnimation(link, e);
         });
+        dabba.classList.remove("animate");
       }
     });
   }, []);
@@ -194,6 +222,11 @@ function Projects() {
     attachScrollEvent(loco);
 
   }, [showMenu])
+  useEffect(()=>{
+    setTimeout(()=>{
+      addHorizontalScrollAnimation();
+    },2200)
+  },[])
   const showResumeAnimation = (event) => {
 
     event.stopPropagation()
@@ -220,6 +253,7 @@ function Projects() {
     ele.classList.add("connect-box-animation");
 
   }
+
   return (
     <>
       <Transition>
@@ -241,7 +275,20 @@ function Projects() {
             <div className="work mobn">WORK
             </div>
           </div>
-          <div className="dabba">TO BE CONTINUED......</div>
+          <div className="dabba">
+            <div className="dabba-wrapper">
+              <section class="panel red">
+                ONE
+              </section>
+              <section class="panel orange">
+                TWO
+              </section>
+              <section class="panel purple">
+                THREE
+              </section>
+            </div>
+
+          </div>
 
           <Footer dateState={dateState}></Footer>
           {mobileMenu && (

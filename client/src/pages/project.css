@@ -1,0 +1,23 @@
+.red{
+    width: 1000px;
+    background-color: red;
+    height: 100vh;
+}
+
+.orange{
+    width: 1000px;
+    background-color: orange;
+    height: 100vh;
+}
+
+.purple{
+    width: 1000px;
+    background-color: purple;
+    height: 100vh;
+}
+/* .container {
+	width: 400%;
+	height: 100vh;
+	display: flex;
+	flex-wrap: nowrap;
+} */

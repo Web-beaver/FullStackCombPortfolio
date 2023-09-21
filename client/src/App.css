@@ -245,17 +245,6 @@ justify-content:flex-end;
   font-size:1.0rem;
   font-weight:500;
 }
-.dabba{
-  background-color: black;
-  width: 100%;
-  height: 100vh;
-  color: white;
-  font-size: 20vw;
-  margin-top: 22vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .arr{
   transition: all ease-in-out 0.4s;
 }
@@ -773,4 +762,31 @@ padding-top:0vh !important;
 .side-lancer-2.showit{
   opacity: 1;
   transform: translate(-100%,-5%);
+}
+
+.dabba{
+  background-color: black;
+  width: 400%;
+  height: 100vh;
+  color: white;
+  font-size: 5vw;
+  margin-top: 22vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: scroll !important;
+  overflow-y: visible;
+  overflow-x: scroll !important;
+}
+.dabba-wrapper{
+  display: flex;
+  transform: translateX(-100%);
+  transition-property: transform;
+  transition-duration: 0.4s;
+  transition-timing-function: linear;
+
+}
+.dabba-wrapper.animate{
+  transform: translateX(0%);
+  
 }
